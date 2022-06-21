@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -10,10 +10,10 @@ export default createGlobalStyle`
 
   html {
     @media (max-width: 1199.92px) {
-      font-size: 93.75%; //16px
+      font-size: 93.75%;  //16px
     }
     @media (max-width: 991.92px) {
-      font-size: 87.5%; //14px
+      font-size: 87.5%;  //14px
   }
 
   body {

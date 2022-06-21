@@ -1,6 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import { getProductById } from "../utils/http";
+import { setCookie, parseCookies } from "nookies";
 
 interface CartProviderProps {
   children: ReactNode;
@@ -15,9 +23,21 @@ interface CartContextData {
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
+  const cookies = parseCookies();
   const [cart, setCart] = useState<NewProducts>(() => {
     return [];
   });
+
+  let [verifyCookies, setVerifyCookies] = useState(true);
+
+  useEffect(() => {
+    if (verifyCookies === true) {
+      if (cookies) {
+        setCart(JSON.parse(cookies.CATALOG_USER_CART));
+      }
+      setVerifyCookies(false);
+    }
+  }, [verifyCookies, cookies]);
 
   const addProduct = async (productId: string) => {
     try {
@@ -33,6 +53,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
 
       setCart(updatedCart);
+      setCookie(null, `CATALOG_USER_CART`, JSON.stringify(updatedCart), {
+        maxAge: 86400, // one day in seconds
+        path: "/",
+      });
+      setVerifyCookies(true);
+
       toast.success("Produto adicionado ao carrinho 🙂", {
         position: "top-right",
         autoClose: 5000,
@@ -57,14 +83,20 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const removeProduct = (productId: string) => {
     try {
-      const updatedCart = [...cart];
-      const productIndex = updatedCart.findIndex(
-        (product) => product.id === productId
-      );
+      const OldCart = [...cart];
 
-      if (productIndex >= 0) {
-        updatedCart.splice(productIndex, 1);
-        setCart(updatedCart);
+      const UpdatedCart = OldCart.filter((product) => product.id !== productId);
+
+      if (UpdatedCart) {
+        setCart(UpdatedCart);
+
+        setCookie(null, `CATALOG_USER_CART`, JSON.stringify(UpdatedCart), {
+          maxAge: 86400, // one day in seconds
+          path: "/",
+        });
+
+        setVerifyCookies(true);
+
         toast.success("Produto removido do carrinho 🙂", {
           position: "top-right",
           autoClose: 5000,

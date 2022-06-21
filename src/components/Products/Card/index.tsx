@@ -25,9 +25,7 @@ const Card: React.FC<PropsImage> = ({
   price,
   productId,
 }) => {
-  const { cart, addProduct } = useCart();
-  console.log(cart);
-
+  const { addProduct } = useCart();
   return (
     <S.Card>
       <S.Box className="card-box">

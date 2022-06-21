@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import * as S from "./styles";
 
 import img from "../../../../public/noimageavailable.svg";
+import { useWindowsIsDesktop } from "hooks/useWindowsDesktop";
 
 type SliderListProps = {
   products: NewProducts;
@@ -17,6 +18,8 @@ type SliderListProps = {
 const SliderList: React.FC<SliderListProps> = ({
   products,
 }: SliderListProps) => {
+  const isDesktop = useWindowsIsDesktop();
+
   return (
     <Section>
       <S.Container>
@@ -31,11 +34,12 @@ const SliderList: React.FC<SliderListProps> = ({
             modules={[Navigation]}
             navigation
             spaceBetween={30}
-            slidesPerView={4}
+            slidesPerView={!isDesktop ? 2 : 4}
           >
             {products.map((product) => (
               <SwiperSlide key={product.id}>
                 <Card
+                  productId={product.id}
                   image={product.image ? product.image : img}
                   alt={product.description}
                   width="700"

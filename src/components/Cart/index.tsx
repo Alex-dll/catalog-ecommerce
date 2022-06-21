@@ -22,7 +22,6 @@ interface Props {
 
 function Cart({ corporateName, catalogCompany }: Props) {
   const { cart, removeProduct } = useCart();
-  console.log(cart);
   const { query } = useRouter();
 
   const id = query.id;

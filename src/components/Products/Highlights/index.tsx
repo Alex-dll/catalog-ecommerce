@@ -2,8 +2,6 @@ import React from "react";
 import { Card } from "../index";
 
 import img from "../../../../public/noimageavailable.svg";
-import img2 from "../../../../public/02.jpg";
-import img3 from "../../../../public/03.jpg";
 
 import * as S from "./styles";
 

@@ -33,7 +33,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   useEffect(() => {
     if (verifyCookies === true) {
       if (cookies) {
-        setCart(JSON.parse(cookies.CATALOG_USER_CART));
+        let updatedCookies = cookies.CATALOG_USER_CART;
+        setCart(updatedCookies ? JSON.parse(cookies.CATALOG_USER_CART) : []);
       }
       setVerifyCookies(false);
     }

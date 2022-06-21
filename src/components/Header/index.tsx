@@ -1,9 +1,18 @@
+import { NavigatorsLink, SearchHeader } from "components";
 import * as S from "./styles";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  corporateName: string;
+  id: string;
+};
+
+const Header: React.FC<HeaderProps> = ({ corporateName, id }: HeaderProps) => {
   return (
     <S.Header>
-      <h1>Logo</h1>
+      <S.Container>
+        <NavigatorsLink path={`/${id}`} text={corporateName} />
+        <SearchHeader id={String(id)} />
+      </S.Container>
     </S.Header>
   );
 };

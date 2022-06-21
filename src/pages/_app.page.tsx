@@ -1,8 +1,5 @@
 import type { AppProps } from "next/app";
 
-import { store } from "../store/store";
-import { Provider as ReduxProvider } from "react-redux";
-
 import { QueryClientProvider } from "react-query";
 import queryClient from "../utils/queryClient";
 
@@ -15,10 +12,12 @@ import GlobalStyle from "../styles/global";
 
 import NextNProgress from "nextjs-progressbar";
 
+import { CartProvider } from "../hooks/useCart";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ReduxProvider store={store}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <CartProvider>
         <ThemeProvider theme={theme}>
           <ToastContainer
             position="top-right"
@@ -40,8 +39,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
           <Component {...pageProps} />
         </ThemeProvider>
-      </QueryClientProvider>
-    </ReduxProvider>
+      </CartProvider>
+    </QueryClientProvider>
   );
 }
 

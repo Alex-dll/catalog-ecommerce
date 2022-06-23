@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-import { Header, Heading, Highlights, SliderList, TitleBox } from "components";
+import { Header, Highlights, SliderList, TitleBox } from "components";
 
 import { getCatalog, getCompany, getProducts } from "utils/http";
 import { CatalogAtCompanyProps } from "types";

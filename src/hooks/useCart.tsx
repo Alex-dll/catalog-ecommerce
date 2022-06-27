@@ -1,7 +1,6 @@
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -27,6 +26,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const [cart, setCart] = useState<NewProducts>(() => {
     return [];
   });
+
+  // if (typeof window !== "undefined") {
+  //   localStorage.setItem("cart", JSON.stringify(cookies));
+  // }
 
   let [verifyCookies, setVerifyCookies] = useState(true);
 

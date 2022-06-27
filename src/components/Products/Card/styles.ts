@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Card = styled.div`
   width: 100%;
@@ -34,7 +34,7 @@ export const Box = styled.div`
   }
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 0;
@@ -46,7 +46,6 @@ export const Box = styled.div`
     transition-timing-function: cubic-bezier(1, 0.01, 0, 1.07);
   }
 `;
-
 
 export const Actions = styled.div`
   position: absolute;
@@ -60,8 +59,8 @@ export const Actions = styled.div`
   gap: 1rem;
   opacity: 0;
   z-index: 5;
-  transition: all 500ms cubic-bezier(1,0.01,0,1.07);
-  transition-timing-function: cubic-bezier(1,0.01,0,1.07);
+  transition: all 500ms cubic-bezier(1, 0.01, 0, 1.07);
+  transition-timing-function: cubic-bezier(1, 0.01, 0, 1.07);
 `;
 
 export const Icon = styled.span`
@@ -82,7 +81,7 @@ export const Icon = styled.span`
   }
 
   &:hover {
-    transform: scale(1.1)
+    transform: scale(1.1);
   }
 `;
 
@@ -92,7 +91,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.p`
-  font-size: 1.2re ;
+  font-size: 1.2re;
   color: ${({ theme }) => theme.colors.gray[500]};
   font-weight: 300;
 `;
@@ -119,4 +118,4 @@ export const BuyButton = styled.button`
   &:active {
     filter: brightness(70%);
   }
-`
+`;

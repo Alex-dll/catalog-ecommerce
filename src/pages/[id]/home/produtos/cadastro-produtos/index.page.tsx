@@ -1,4 +1,4 @@
-import { DashboardProducts } from "components";
+import { DashboardProducts, ProductsRegister } from "components";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { CatalogAtCompanyProps } from "types";
 import { getCatalog, getCompany } from "utils/http";
@@ -8,10 +8,10 @@ interface Props {
   catalogCompany: CatalogAtCompanyProps;
 }
 
-export default function Home({ catalogCompany }: Props) {
+export default function Home() {
   return (
     <>
-      <DashboardProducts catalogCompany={catalogCompany} />
+      <ProductsRegister buttonLabel="Cadastrar Produto" />
     </>
   );
 }

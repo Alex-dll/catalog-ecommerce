@@ -6,7 +6,6 @@ import Link from "next/link";
 const Sidebar: React.FC = () => {
   const { query } = useRouter();
   const id = query.id;
-  console.log(id);
 
   return (
     <S.Container>

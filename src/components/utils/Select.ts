@@ -1,11 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-type Props = {
-  theme: any;
-  error?: TypeError | null;
-};
-
-export default styled.input<Props>`
+export default styled.select`
   width: 100%;
   background: #fff;
   border: 2px solid #fff;
@@ -17,14 +12,8 @@ export default styled.input<Props>`
   font-size: 16px;
   transition: border-color 0.2s ease-in;
   appearance: none;
+
   &:focus {
     border: 2px solid ${({ theme }) => theme.colors.green[500]};
   }
-
-  ${({ theme, error }: Props) =>
-    error &&
-    css`
-      color: ${theme.colors.red[500]};
-      border-color: ${theme.colors.red[500]} !important;
-    `}
 `;

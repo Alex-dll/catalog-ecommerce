@@ -1,16 +1,25 @@
-const convertBase64 = (file: Blob) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+import { useState } from "react";
 
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
+const convertImageToBase64 = (file: Blob) => {
+  return new Promise((resolve) => {
+    let fileInfo;
+    let baseURL = "";
+    // Make new FileReader
+    let reader = new FileReader();
 
-    fileReader.onerror = (error) => {
-      reject(error);
+    // Convert the file to base64 text
+    reader.readAsDataURL(file);
+
+    // on reader load somthing...
+    reader.onload = () => {
+      // Make a fileInfo Object
+      console.log("Called", reader);
+      baseURL = String(reader.result);
+      console.log(baseURL);
+      resolve(baseURL);
     };
+    console.log(fileInfo);
   });
 };
 
-export { convertBase64 }
+export { convertImageToBase64 };

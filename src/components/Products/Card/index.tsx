@@ -5,6 +5,7 @@ import img from "../../../../public/noimageavailable.svg";
 
 import { BsEye } from "react-icons/bs";
 import * as S from "./styles";
+import { formatPrice } from "services/format";
 
 type PropsImage = {
   image: string;
@@ -48,7 +49,7 @@ const Card: React.FC<PropsImage> = ({
       </S.Box>
       <S.Content>
         <S.Title>{title}</S.Title>
-        <S.Price>{price}</S.Price>
+        <S.Price>{formatPrice(price)}</S.Price>
       </S.Content>
     </S.Card>
   );

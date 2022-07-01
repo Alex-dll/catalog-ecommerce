@@ -32,6 +32,12 @@ export function getProducts(productIds: string[]): Promise<NewProducts> {
     .then(({ data }: AxiosResponse<NewProducts>) => data);
 }
 
+export function getCategories(companyId: string): Promise<Categories> {
+  return http
+    .get<Categories>(`/CompanyProduct/${companyId}/Categories`)
+    .then(({ data }: AxiosResponse<Categories>) => data);
+}
+
 export function getProductById(productId: string): Promise<NewProduct> {
   return http
     .get<NewProduct>(`/Product/${productId}`)
@@ -44,9 +50,9 @@ export function updateProductById(product: NewProduct): Promise<NewProduct> {
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 
-export function createProducts(product: NewProduct): Promise<NewProduct> {
+export function createProduct(product: NewProduct): Promise<NewProduct> {
   return http
-    .post<NewProduct>(`/Product`, product)
+    .post<NewProduct>(`/Product/Company`, product)
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 

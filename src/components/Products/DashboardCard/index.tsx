@@ -6,15 +6,32 @@ import * as S from "./styles";
 
 import img from "/public/noimageavailable.svg";
 
-const DashboardCard: React.FC = () => {
+type DashboardCardProps = {
+  title: string;
+  description: string;
+  available: number;
+  image: string;
+};
+
+const DashboardCard: React.FC<DashboardCardProps> = ({
+  title,
+  description,
+  available,
+  image,
+}: DashboardCardProps) => {
   return (
     <S.Container>
-      <Image alt="corporateName" src={img} width="50px" height="50px" />
-      <S.Title>Titulo</S.Title>
-      <S.Description>Descrição</S.Description>
+      <Image
+        alt="corporateName"
+        src={image || img}
+        width="70px"
+        height="70px"
+      />
+      <S.Title>{title}</S.Title>
+      <S.Description>{description}</S.Description>
       <S.Value></S.Value>
       <S.Available>
-        <S.Title>indisponivel: </S.Title>
+        <S.Title>indisponivel: {available} </S.Title>
         <Button>Deixar Disponivel</Button>
       </S.Available>
       <S.ButtonWrapper>

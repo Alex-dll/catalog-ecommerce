@@ -5,13 +5,23 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  padding: 1rem;
+  margin: 1rem;
 `;
 
-export const Title = styled.span``;
+export const Title = styled.span`
+  padding: 8px;
+`;
 
-export const Description = styled.p``;
+export const Description = styled.p`
+  padding: 8px;
+  max-width: 400px;
+`;
 
-export const Value = styled.span``;
+export const Value = styled.span`
+  padding: 8px;
+`;
 
 export const Available = styled.div`
   display: flex;
@@ -24,6 +34,7 @@ export const Button = styled.button``;
 
 export const ButtonWrapper = styled.div`
   display: flex;
+  padding: 8px;
   gap: 1rem;
 `;
 

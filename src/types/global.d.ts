@@ -7,12 +7,20 @@ interface DataProps {
 }
 
 interface NewProduct {
-  id: string;
+  id?: string;
   title: string;
   description: string;
-  available: boolean;
+  available: number;
   image: string;
   price: number;
 }
 
 type NewProducts = Array<NewProduct>;
+
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+}
+
+type Categories = Array<Category>;

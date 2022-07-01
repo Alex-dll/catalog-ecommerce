@@ -1,16 +1,20 @@
 import React from "react";
-import { Company } from "../Company";
 import { Sidebar } from "components/Sidebar";
 
 import * as S from "./styles";
-import { ProductsRegister } from "../ProductsRegister";
+import { Products } from "../Products";
+import { CatalogAtCompanyProps } from "types";
 
-const DashboardProducts: React.FC = () => {
+interface Props {
+  catalogCompany: CatalogAtCompanyProps;
+}
+
+const DashboardProducts: React.FC<Props> = ({ catalogCompany }: Props) => {
   return (
     <S.Container>
       <S.Wrapper>
         <Sidebar />
-        <ProductsRegister />
+        <Products catalogCompany={catalogCompany} />
       </S.Wrapper>
     </S.Container>
   );

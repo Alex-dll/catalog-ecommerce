@@ -1,12 +1,11 @@
 import { DashboardCard } from "components/Products";
 import Button from "components/utils/Button";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { CatalogAtCompanyProps } from "types";
-import { getCatalog, getCompany, getProducts } from "utils/http";
+import { getProducts } from "utils/http";
 
 import * as S from "./styles";
 
@@ -66,6 +65,8 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
                 return (
                   <DashboardCard
                     key={product.id}
+                    id={String(product.id)}
+                    price={product.price}
                     image={product.image}
                     available={product.available}
                     description={product.description}

@@ -44,9 +44,12 @@ export function getProductById(productId: string): Promise<NewProduct> {
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 
-export function updateProductById(product: NewProduct): Promise<NewProduct> {
+export function updateProductAvailableById(
+  productId: string,
+  available: number
+): Promise<NewProduct> {
   return http
-    .post<NewProduct>(`/Product`, product)
+    .patch<NewProduct>(`/Product/${productId}/Avalible/${available}`)
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 
@@ -56,7 +59,7 @@ export function createProduct(product: NewProduct): Promise<NewProduct> {
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 
-export function deleteProducts(id: string): Promise<void> {
+export function deleteProduct(id: string): Promise<void> {
   return http
     .delete<void>(`/Product/${id}`)
     .then(({ data }: AxiosResponse<void>) => data);

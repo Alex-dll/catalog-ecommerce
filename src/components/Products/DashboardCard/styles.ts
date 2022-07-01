@@ -35,15 +35,35 @@ export const Button = styled.button``;
 export const ButtonWrapper = styled.div`
   display: flex;
   padding: 8px;
-  gap: 1rem;
+  gap: 1px;
 `;
 
 export const UpdateProduct = styled.button`
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 export const RemoveProduct = styled.button`
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;

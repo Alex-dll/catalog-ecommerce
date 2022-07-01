@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  MdDelete,
-  MdAddCircleOutline,
-  MdRemoveCircleOutline,
-} from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 import Image from "next/image";
 import { useCart } from "hooks/useCart";
@@ -77,7 +73,7 @@ function Cart({ corporateName, catalogCompany }: Props) {
                 <td>
                   <button
                     type="button"
-                    onClick={() => handleRemoveProduct(product.id)}
+                    onClick={() => handleRemoveProduct(String(product.id))}
                   >
                     <MdDelete size={20} />
                   </button>

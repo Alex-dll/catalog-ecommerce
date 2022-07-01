@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import React, { useState } from "react";
 
 import { FormGroup } from "components";
@@ -10,11 +10,15 @@ import useErrors from "hooks/useErrors";
 import * as S from "./styles";
 import { createProduct, getCategories } from "utils/http";
 import { useQuery } from "react-query";
-import { convertImageToBase64 } from "services/convertImageToBase64";
+import { toast } from "react-toastify";
 
-type Props = {
+interface WithRouterProps {
+  router?: NextRouter;
+}
+
+interface Props extends WithRouterProps {
   buttonLabel: string;
-};
+}
 
 const ProductsRegister: React.FC<Props> = ({
   buttonLabel = "Register",
@@ -27,6 +31,8 @@ const ProductsRegister: React.FC<Props> = ({
 
   const [available, setAvailable] = useState(1);
   const [category, setCategory] = useState("");
+
+  const router: NextRouter = useRouter();
 
   const { query } = useRouter();
   const id = query.id;
@@ -107,8 +113,29 @@ const ProductsRegister: React.FC<Props> = ({
       companyId: String(id),
     };
 
-    createProduct(produto);
-    console.log(produto);
+    try {
+      createProduct(produto);
+      toast.success("Produto cadastrado com sucesso! 🙂", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.push(`/${id}/home/produtos`);
+    } catch (e) {
+      toast.error("Não foi possivel cadastrar o produto! 😢", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   }
 
   return (

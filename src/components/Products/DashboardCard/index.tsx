@@ -28,7 +28,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   available,
   image,
 }: DashboardCardProps) => {
-  const [isAvailable, setIsAvailable] = useState(available);
+  const availableItem = available === 1 ? true : false;
+
+  const [isAvailable, setIsAvailable] = useState(availableItem);
   const queryClient = useQueryClient();
 
   function handleDeleteProduct() {
@@ -59,10 +61,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
 
   function handleChangeProductAvailable() {
     try {
-      let availableState = available === 1 ? 0 : 1;
-      setIsAvailable(availableState);
+      setIsAvailable((prevState) => !prevState);
       console.log(isAvailable);
-      updateProductAvailableById(id, isAvailable);
+      updateProductAvailableById(id, isAvailable === true ? 1 : 0);
 
       queryClient.invalidateQueries("products");
       toast.success("Produto atualizado com sucesso! 🙂", {
@@ -89,23 +90,25 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
 
   return (
     <S.Container>
-      {image === null || image === "" ? (
-        <Image
-          alt="corporateName"
-          src={imageFallback}
-          width="70px"
-          height="70px"
-        />
-      ) : (
-        <Image alt="corporateName" src={image} width="70px" height="70px" />
-      )}
-      <S.Title>{title}</S.Title>
+      <S.ImageBox>
+        {image === null || image === "" ? (
+          <Image
+            alt="corporateName"
+            src={imageFallback}
+            width="70px"
+            height="70px"
+          />
+        ) : (
+          <Image alt="corporateName" src={image} width="70px" height="70px" />
+        )}
+        <S.Title>{title}</S.Title>
+      </S.ImageBox>
       <S.Description>{description}</S.Description>
       <S.Value>{formatPrice(price)}</S.Value>
       <S.Available>
-        <S.Title>{isAvailable === 1 ? "Disponivel" : "Indisponivel"}</S.Title>
+        <S.Title>{isAvailable ? "Disponivel" : "Indisponivel"}</S.Title>
         <Button onClick={handleChangeProductAvailable}>
-          {isAvailable === 1 ? "Deixar Indisponivel" : "Deixar Disponivel"}
+          {isAvailable ? "Deixar Indisponivel" : "Deixar Disponivel"}
         </Button>
       </S.Available>
       <S.ButtonWrapper>

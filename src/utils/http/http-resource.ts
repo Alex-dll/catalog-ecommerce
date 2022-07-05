@@ -38,6 +38,12 @@ export function getCategories(companyId: string): Promise<Categories> {
     .then(({ data }: AxiosResponse<Categories>) => data);
 }
 
+export function createCategory(category: newCategory): Promise<NewProduct> {
+  return http
+    .post<NewProduct>(`/ProductCategory/Company`, category)
+    .then(({ data }: AxiosResponse<NewProduct>) => data);
+}
+
 export function getProductById(productId: string): Promise<NewProduct> {
   return http
     .get<NewProduct>(`/Product/${productId}`)

@@ -8,6 +8,18 @@ export const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   padding: 1rem;
   margin: 1rem;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+`;
+
+export const ImageBox = styled.div`
+  display: flex;
+
+  @media (max-width: 1250px) {
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled.span`
@@ -28,6 +40,11 @@ export const Available = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
 `;
 
 export const Button = styled.button``;

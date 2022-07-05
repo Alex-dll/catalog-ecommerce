@@ -39,9 +39,13 @@ export const Wrapper = styled.div`
   padding-top: 10px;
 `;
 
-export const Category = styled.div``;
+export const Category = styled.div`
+  padding: 0 4px;
+`;
 
-export const Products = styled.div``;
+export const Products = styled.div`
+  padding: 0 4px;
+`;
 
 export const WrapperList = styled.div`
   margin-top: 2rem;

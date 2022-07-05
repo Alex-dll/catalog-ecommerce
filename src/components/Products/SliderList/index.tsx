@@ -39,7 +39,7 @@ const SliderList: React.FC<SliderListProps> = ({
             {products.map((product) => (
               <SwiperSlide key={product.id}>
                 <Card
-                  productId={product.id}
+                  productId={String(product.id)}
                   image={product.image ? product.image : img}
                   alt={product.description}
                   width="700"

@@ -24,3 +24,9 @@ interface Category {
 }
 
 type Categories = Array<Category>;
+
+type newCategory = {
+  name: string;
+  description: string;
+  companyId: string;
+};

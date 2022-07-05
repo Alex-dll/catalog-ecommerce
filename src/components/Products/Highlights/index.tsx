@@ -18,7 +18,7 @@ const Highlights: React.FC<HighlightsProps> = ({
         {products?.slice(0, 3).map((product) => (
           <S.Column key={product.id}>
             <Card
-              productId={product.id}
+              productId={String(product.id)}
               image={product.image ? product.image : img}
               alt={product.description}
               width="700"

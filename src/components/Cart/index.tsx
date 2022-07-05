@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 import Image from "next/image";
@@ -10,6 +10,8 @@ import { CatalogAtCompanyProps } from "types";
 import { useRouter } from "next/router";
 
 import img from "/public/noimageavailable.svg";
+import { useQuery } from "react-query";
+import { getProducts } from "utils/http";
 
 interface Props {
   corporateName: string;
@@ -17,19 +19,28 @@ interface Props {
 }
 
 function Cart({ corporateName, catalogCompany }: Props) {
+  const [products, setProducts] = useState<NewProducts>([]);
   const { cart, removeProduct } = useCart();
   const { query } = useRouter();
 
   const id = query.id;
 
-  const cartFormatted = cart.map((product) => ({
+  const { data } = useQuery([`productsCart`, id], () => getProducts(cart));
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setProducts(data);
+    }
+  }, [data]);
+
+  const cartFormatted = products.map((product) => ({
     ...product,
     priceFormatted: formatPrice(product.price),
     subTotal: formatPrice(product.price * 1),
   }));
 
   const total = formatPrice(
-    cart.reduce((sumTotal, product) => {
+    products.reduce((sumTotal, product) => {
       return sumTotal + product.price * 1;
     }, 0)
   );

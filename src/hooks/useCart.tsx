@@ -6,15 +6,19 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
-import { getProductById } from "../utils/http";
 import { setCookie, parseCookies } from "nookies";
+import queryClient from "utils/queryClient";
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
+type productId = string;
+
+type ProductsIds = Array<productId>;
+
 interface CartContextData {
-  cart: NewProducts;
+  cart: ProductsIds;
   addProduct: (productId: string) => Promise<void>;
   removeProduct: (productId: string) => void;
 }
@@ -23,18 +27,12 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const cookies = parseCookies();
-  const [cart, setCart] = useState<NewProducts>(() => {
-    return [];
-  });
-
-  // if (typeof window !== "undefined") {
-  //   localStorage.setItem("cart", JSON.stringify(cookies));
-  // }
+  const [cart, setCart] = useState<ProductsIds>([]);
 
   let [verifyCookies, setVerifyCookies] = useState(true);
 
   useEffect(() => {
-    if (verifyCookies === true) {
+    if (verifyCookies) {
       if (cookies) {
         let updatedCookies = cookies.CATALOG_USER_CART;
         setCart(updatedCookies ? JSON.parse(cookies.CATALOG_USER_CART) : []);
@@ -45,22 +43,20 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const addProduct = async (productId: string) => {
     try {
-      const updatedCart = [...cart];
-      const productExists = updatedCart.find(
-        (product) => product.id === productId
-      );
+      const newCart = [...cart];
 
-      if (!productExists) {
-        const product = await getProductById(productId);
+      const item = newCart.find((product) => product === productId);
 
-        updatedCart.push(product);
+      if (!item) {
+        newCart.push(productId);
       }
+      setCart(newCart);
 
-      setCart(updatedCart);
-      setCookie(null, `CATALOG_USER_CART`, JSON.stringify(updatedCart), {
+      setCookie(null, `CATALOG_USER_CART`, JSON.stringify(newCart), {
         maxAge: 86400, // one day in seconds
         path: "/",
       });
+      queryClient.invalidateQueries("productsCart");
       setVerifyCookies(true);
 
       toast.success("Produto adicionado ao carrinho 🙂", {
@@ -89,10 +85,13 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     try {
       const OldCart = [...cart];
 
-      const UpdatedCart = OldCart.filter((product) => product.id !== productId);
+      const UpdatedCart = OldCart.filter((product) => product !== productId);
 
       if (UpdatedCart) {
         setCart(UpdatedCart);
+        queryClient.invalidateQueries("productsCart");
+
+        setVerifyCookies(true);
 
         setCookie(null, `CATALOG_USER_CART`, JSON.stringify(UpdatedCart), {
           maxAge: 86400, // one day in seconds

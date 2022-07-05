@@ -36,7 +36,7 @@ const SliderList: React.FC<SliderListProps> = ({
             spaceBetween={30}
             slidesPerView={!isDesktop ? 2 : 4}
           >
-            {products.map((product) => (
+            {products?.map((product) => (
               <SwiperSlide key={product.id}>
                 <Card
                   productId={String(product.id)}

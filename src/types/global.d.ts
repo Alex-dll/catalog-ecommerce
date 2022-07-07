@@ -13,6 +13,7 @@ interface NewProduct {
   available: number;
   image: string;
   price: number;
+  category?: string;
 }
 
 type NewProducts = Array<NewProduct>;

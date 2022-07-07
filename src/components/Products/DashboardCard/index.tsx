@@ -1,5 +1,6 @@
 import Button from "components/utils/Button";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { useQueryClient } from "react-query";
@@ -12,6 +13,7 @@ import * as S from "./styles";
 import imageFallback from "/public/noimageavailable.svg";
 
 type DashboardCardProps = {
+  companyId: string;
   id: string;
   title: string;
   price: number;
@@ -27,6 +29,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   description,
   available,
   image,
+  companyId,
 }: DashboardCardProps) => {
   const availableItem = available === 1 ? true : false;
 
@@ -112,9 +115,17 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
         </Button>
       </S.Available>
       <S.ButtonWrapper>
-        <S.UpdateProduct>
-          <MdModeEdit size="25px" />
-        </S.UpdateProduct>
+        <Link
+          href={{
+            pathname: "/[companyId]/home/produtos/atualizar-produto/[id]",
+            query: { companyId, id },
+          }}
+        >
+          <S.UpdateProduct>
+            <MdModeEdit size="25px" />
+          </S.UpdateProduct>
+        </Link>
+
         <S.RemoveProduct onClick={handleDeleteProduct}>
           <MdDelete size="25px" />
         </S.RemoveProduct>

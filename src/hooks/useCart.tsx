@@ -50,13 +50,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       if (!item) {
         newCart.push(productId);
       }
+
       setCart(newCart);
 
       setCookie(null, `CATALOG_USER_CART`, JSON.stringify(newCart), {
         maxAge: 86400, // one day in seconds
         path: "/",
       });
-      queryClient.invalidateQueries("productsCart");
+
       setVerifyCookies(true);
 
       toast.success("Produto adicionado ao carrinho 🙂", {
@@ -89,7 +90,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       if (UpdatedCart) {
         setCart(UpdatedCart);
-        queryClient.invalidateQueries("productsCart");
 
         setVerifyCookies(true);
 

@@ -65,6 +65,12 @@ export function createProduct(product: NewProduct): Promise<NewProduct> {
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 
+export function updateProduct(product: NewProduct): Promise<NewProduct> {
+  return http
+    .patch<NewProduct>(`/Product/${product.id}`, product)
+    .then(({ data }: AxiosResponse<NewProduct>) => data);
+}
+
 export function deleteProduct(id: string): Promise<void> {
   return http
     .delete<void>(`/Product/${id}`)

@@ -25,7 +25,7 @@ function Cart({ corporateName, catalogCompany }: Props) {
 
   const id = query.id;
 
-  const { data } = useQuery([`productsCart`, id], () => getProducts(cart));
+  const { data } = useQuery([`productsCart`, cart], () => getProducts(cart));
 
   useEffect(() => {
     if (data !== undefined) {

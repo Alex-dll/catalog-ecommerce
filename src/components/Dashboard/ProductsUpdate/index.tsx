@@ -116,18 +116,17 @@ const ProductsUpdate: React.FC<Props> = ({
     event.preventDefault();
 
     let produto = {
+      id: String(productId),
       title: name,
       description,
       price,
       image: image64,
-      available,
       productCategoryId: category,
-      companyId: String(id),
     };
 
     try {
       updateProduct(produto);
-      toast.success("Produto cadastrado com sucesso! 🙂", {
+      toast.success("Produto atualizado com sucesso! 🙂", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -138,7 +137,7 @@ const ProductsUpdate: React.FC<Props> = ({
       });
       router.push(`/${id}/home/produtos`);
     } catch (e) {
-      toast.error("Não foi possivel cadastrar o produto! 😢", {
+      toast.error("Não foi possivel atualizar o produto! 😢", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

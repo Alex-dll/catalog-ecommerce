@@ -39,7 +39,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   function handleDeleteProduct() {
     try {
       deleteProduct(id);
+
       queryClient.invalidateQueries("products");
+
       toast.success("Produto deletado com sucesso! 🙂", {
         position: "top-right",
         autoClose: 5000,

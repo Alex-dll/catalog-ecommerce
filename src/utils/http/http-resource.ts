@@ -67,7 +67,7 @@ export function createProduct(product: NewProduct): Promise<NewProduct> {
 
 export function updateProduct(product: NewProduct): Promise<NewProduct> {
   return http
-    .patch<NewProduct>(`/Product/${product.id}`, product)
+    .put<NewProduct>(`/Product`, product)
     .then(({ data }: AxiosResponse<NewProduct>) => data);
 }
 

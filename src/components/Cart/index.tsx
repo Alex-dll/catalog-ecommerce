@@ -58,7 +58,7 @@ function Cart({ corporateName, catalogCompany }: Props) {
             <tr>
               <th aria-label="product image" />
               <th>PRODUTO</th>
-              <th>QTD</th>
+              <th>VALOR</th>
               <th>SUBTOTAL</th>
               <th aria-label="delete icon" />
             </tr>

@@ -10,7 +10,7 @@ interface NewProduct {
   id?: string;
   title: string;
   description: string;
-  available: number;
+  available?: number;
   image: string;
   price: number;
   category?: string;

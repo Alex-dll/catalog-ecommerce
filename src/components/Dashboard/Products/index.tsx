@@ -32,7 +32,7 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
   return (
     <S.Container>
       <S.Content>
-        <S.Title>Products</S.Title>
+        <S.Title>Produtos</S.Title>
 
         <S.Wrapper>
           <S.Category>
@@ -69,7 +69,7 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
                     id={String(product.id)}
                     price={product.price}
                     image={product.image}
-                    available={product.available}
+                    available={Number(product.available)}
                     description={product.description}
                     title={product.title}
                   />

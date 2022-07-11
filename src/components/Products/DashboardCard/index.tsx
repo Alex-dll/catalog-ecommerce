@@ -61,9 +61,31 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
     }
   }
 
+  async function updateStatusAvailableProduct(id: string) {
+    if (isAvailable === 1) {
+      setIsAvailable(0);
+      await updateProductAvailableById(id, 0);
+    } else if (isAvailable === 0) {
+      setIsAvailable(1);
+      await updateProductAvailableById(id, 1);
+    }
+
+    toast.success("Produto atualizado com sucesso! 🙂", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   async function HandleDeleteProduct() {
     try {
       await DeleteProduct(id);
+
+      await queryClient.refetchQueries();
     } catch (error) {
       toast.error("Não foi possivel deletar o produto! 😢", {
         position: "top-right",
@@ -79,23 +101,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
 
   async function handleChangeProductAvailable() {
     try {
-      setIsAvailable((prevState) => (prevState === 1 ? 0 : 1));
-
-      console.log(isAvailable);
-
-      await updateProductAvailableById(id, isAvailable);
-
-      queryClient.invalidateQueries("productsRegister");
-
-      toast.success("Produto atualizado com sucesso! 🙂", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      updateStatusAvailableProduct(id);
     } catch (e) {
       toast.error("Não foi possivel atualizar o produto! 😢", {
         position: "top-right",

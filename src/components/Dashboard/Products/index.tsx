@@ -19,7 +19,7 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
   const { query } = useRouter();
   const id = query.id;
 
-  const { data } = useQuery([`products`, products], () =>
+  const { data } = useQuery(["productsRegister", products], () =>
     getProducts(catalogCompany.productIds)
   );
 
@@ -69,7 +69,7 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
                     id={String(product.id)}
                     price={product.price}
                     image={product.image}
-                    available={Number(product.available)}
+                    availableSalle={Number(product.availableSalle)}
                     description={product.description}
                     title={product.title}
                   />

@@ -1,11 +1,13 @@
-import Button from "components/utils/Button";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
-import { MdDelete, MdModeEdit } from "react-icons/md";
+
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { formatPrice } from "services/format";
+
+import Button from "components/utils/Button";
+import { MdDelete, MdModeEdit } from "react-icons/md";
 import { deleteProduct, updateProductAvailableById } from "utils/http";
 
 import * as S from "./styles";
@@ -18,7 +20,7 @@ type DashboardCardProps = {
   title: string;
   price: number;
   description: string;
-  available: number;
+  availableSalle: number;
   image: string;
 };
 
@@ -27,20 +29,23 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
   price,
   description,
-  available,
+  availableSalle,
   image,
   companyId,
 }: DashboardCardProps) => {
-  const availableItem = available === 1 ? true : false;
+  const [isAvailable, setIsAvailable] = useState(availableSalle);
 
-  const [isAvailable, setIsAvailable] = useState(availableItem);
   const queryClient = useQueryClient();
 
-  function handleDeleteProduct() {
-    try {
+  async function DeleteProduct(id: string) {
+    const confirmation = confirm(
+      "Você tem certeza que deseja excluir este produto?"
+    );
+
+    if (confirmation) {
       deleteProduct(id);
 
-      queryClient.invalidateQueries("products");
+      await queryClient.refetchQueries();
 
       toast.success("Produto deletado com sucesso! 🙂", {
         position: "top-right",
@@ -51,7 +56,15 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
         draggable: true,
         progress: undefined,
       });
-    } catch (e) {
+    } else {
+      console.log("Cancelado");
+    }
+  }
+
+  async function HandleDeleteProduct() {
+    try {
+      await DeleteProduct(id);
+    } catch (error) {
       toast.error("Não foi possivel deletar o produto! 😢", {
         position: "top-right",
         autoClose: 5000,
@@ -64,13 +77,16 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
     }
   }
 
-  function handleChangeProductAvailable() {
+  async function handleChangeProductAvailable() {
     try {
-      setIsAvailable((prevState) => !prevState);
-      console.log(isAvailable);
-      updateProductAvailableById(id, isAvailable === true ? 1 : 0);
+      setIsAvailable((prevState) => (prevState === 1 ? 0 : 1));
 
-      queryClient.invalidateQueries("products");
+      console.log(isAvailable);
+
+      await updateProductAvailableById(id, isAvailable);
+
+      queryClient.invalidateQueries("productsRegister");
+
       toast.success("Produto atualizado com sucesso! 🙂", {
         position: "top-right",
         autoClose: 5000,
@@ -111,9 +127,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
       <S.Description>{description}</S.Description>
       <S.Value>{formatPrice(price)}</S.Value>
       <S.Available>
-        <S.Title>{isAvailable ? "Disponivel" : "Indisponivel"}</S.Title>
+        <S.Title>{isAvailable === 1 ? "Disponivel" : "Indisponivel"}</S.Title>
         <Button onClick={handleChangeProductAvailable}>
-          {isAvailable ? "Deixar Indisponivel" : "Deixar Disponivel"}
+          {isAvailable === 1 ? "Deixar Indisponivel" : "Deixar Disponivel"}
         </Button>
       </S.Available>
       <S.ButtonWrapper>
@@ -128,7 +144,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
           </S.UpdateProduct>
         </Link>
 
-        <S.RemoveProduct onClick={handleDeleteProduct}>
+        <S.RemoveProduct onClick={HandleDeleteProduct}>
           <MdDelete size="25px" />
         </S.RemoveProduct>
       </S.ButtonWrapper>

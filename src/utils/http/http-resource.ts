@@ -53,10 +53,10 @@ export function getProductById(productId: string): Promise<NewProduct> {
 export function updateProductAvailableById(
   productId: string,
   available: number
-): Promise<NewProduct> {
+): Promise<any> {
   return http
-    .patch<NewProduct>(`/Product/${productId}/Avalible/${available}`)
-    .then(({ data }: AxiosResponse<NewProduct>) => data);
+    .patch<any>(`/Product/${productId}/Avalible/${available}`)
+    .then(({ data }: AxiosResponse<any>) => data);
 }
 
 export function createProduct(product: NewProduct): Promise<NewProduct> {

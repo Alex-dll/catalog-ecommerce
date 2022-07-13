@@ -8,7 +8,7 @@ interface Props {
   catalogCompany: CatalogAtCompanyProps;
 }
 
-export default function Home({ catalogCompany }: Props) {
+export default function Products({ catalogCompany }: Props) {
   return (
     <>
       <DashboardProducts catalogCompany={catalogCompany} />

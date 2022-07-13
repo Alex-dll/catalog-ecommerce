@@ -35,16 +35,6 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
         <S.Title>Produtos</S.Title>
 
         <S.Wrapper>
-          <S.Category>
-            <Link
-              href={{
-                pathname: "/[id]/home/produtos/cadastro-categoria",
-                query: { id },
-              }}
-            >
-              <Button>Cadastrar Categoria</Button>
-            </Link>
-          </S.Category>
           <S.Products>
             <Link
               href={{

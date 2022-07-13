@@ -67,7 +67,6 @@ const CategoryRegister: React.FC<Props> = ({
     };
 
     try {
-      console.log(category);
       createCategory(category);
       toast.success("Categoria cadastrada com sucesso! 🙂", {
         position: "top-right",
@@ -78,7 +77,7 @@ const CategoryRegister: React.FC<Props> = ({
         draggable: true,
         progress: undefined,
       });
-      router.push(`/${id}/home/produtos`);
+      router.push(`/${id}/home/categorias`);
     } catch (e) {
       toast.error("Não foi possivel cadastrar a categoria! 😢", {
         position: "top-right",

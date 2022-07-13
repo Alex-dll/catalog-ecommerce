@@ -7,7 +7,6 @@ import {
 } from "react";
 import { toast } from "react-toastify";
 import { setCookie, parseCookies } from "nookies";
-import queryClient from "utils/queryClient";
 
 interface CartProviderProps {
   children: ReactNode;

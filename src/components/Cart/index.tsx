@@ -7,11 +7,12 @@ import { formatPrice } from "services/format";
 import { Container, ProductTable, Total } from "./styles";
 import { Header } from "components";
 import { CatalogAtCompanyProps } from "types";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 import img from "/public/noimageavailable.svg";
 import { useQuery } from "react-query";
 import { getProducts } from "utils/http";
+import { convertToWhatsappMessages } from "services/convertToWhatsappMessages";
 
 interface Props {
   corporateName: string;
@@ -21,6 +22,8 @@ interface Props {
 function Cart({ corporateName, catalogCompany }: Props) {
   const [products, setProducts] = useState<NewProducts>([]);
   const { cart, removeProduct } = useCart();
+
+  const router: NextRouter = useRouter();
   const { query } = useRouter();
 
   const id = query.id;
@@ -47,6 +50,22 @@ function Cart({ corporateName, catalogCompany }: Props) {
 
   function handleRemoveProduct(productId: string) {
     removeProduct(productId);
+  }
+
+  function handleSendMessage() {
+    const productsToMessage = products.map((product) => `${product.title}%0a`);
+
+    const productsToMessageWhiteComma = productsToMessage
+      .toString()
+      .replace(/,/g, "");
+
+    const text = convertToWhatsappMessages({
+      message: `Olá, ${corporateName}! meu pedido:%0a%0a${productsToMessageWhiteComma}%0aCom um Total: ${total}`,
+    });
+
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=${556194170022}&text=${text}`;
+
+    router.push(whatsappUrl);
   }
 
   return (
@@ -95,7 +114,9 @@ function Cart({ corporateName, catalogCompany }: Props) {
         </ProductTable>
 
         <footer>
-          <button type="button">Finalizar pedido</button>
+          <button type="button" onClick={handleSendMessage}>
+            Finalizar pedido
+          </button>
 
           <Total>
             <span>TOTAL</span>

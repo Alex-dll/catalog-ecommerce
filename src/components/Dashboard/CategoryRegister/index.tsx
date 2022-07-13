@@ -69,7 +69,7 @@ const CategoryRegister: React.FC<Props> = ({
     try {
       console.log(category);
       createCategory(category);
-      toast.success("Produto cadastrado com sucesso! 🙂", {
+      toast.success("Categoria cadastrada com sucesso! 🙂", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -80,7 +80,7 @@ const CategoryRegister: React.FC<Props> = ({
       });
       router.push(`/${id}/home/produtos`);
     } catch (e) {
-      toast.error("Não foi possivel cadastrar o produto! 😢", {
+      toast.error("Não foi possivel cadastrar a categoria! 😢", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

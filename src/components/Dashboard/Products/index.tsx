@@ -19,7 +19,7 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
   const { query } = useRouter();
   const id = query.id;
 
-  const { data } = useQuery([`products`, id], () =>
+  const { data } = useQuery(["productsRegister", products], () =>
     getProducts(catalogCompany.productIds)
   );
 
@@ -32,19 +32,9 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
   return (
     <S.Container>
       <S.Content>
-        <S.Title>Products</S.Title>
+        <S.Title>Produtos</S.Title>
 
         <S.Wrapper>
-          <S.Category>
-            <Link
-              href={{
-                pathname: "/[id]/home/produtos/cadastro-categoria",
-                query: { id },
-              }}
-            >
-              <Button>Cadastrar Categoria</Button>
-            </Link>
-          </S.Category>
           <S.Products>
             <Link
               href={{
@@ -65,10 +55,11 @@ const Products: React.FC<Props> = ({ catalogCompany }: Props) => {
                 return (
                   <DashboardCard
                     key={product.id}
+                    companyId={String(id)}
                     id={String(product.id)}
                     price={product.price}
                     image={product.image}
-                    available={product.available}
+                    availableSalle={Number(product.availableSalle)}
                     description={product.description}
                     title={product.title}
                   />

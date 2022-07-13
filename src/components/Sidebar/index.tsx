@@ -27,6 +27,14 @@ const Sidebar: React.FC = () => {
       </Link>
       <Link
         href={{
+          pathname: "/[id]/home/categorias",
+          query: { id },
+        }}
+      >
+        <a>Categorias</a>
+      </Link>
+      <Link
+        href={{
           pathname: "/[id]",
           query: { id },
         }}

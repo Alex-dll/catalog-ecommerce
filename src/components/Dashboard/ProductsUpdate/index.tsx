@@ -1,5 +1,5 @@
 import { NextRouter, useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FormGroup } from "components";
 import Button from "components/utils/Button";
@@ -8,7 +8,7 @@ import Select from "components/utils/Select";
 import useErrors from "hooks/useErrors";
 
 import * as S from "./styles";
-import { createProduct, getCategories } from "utils/http";
+import { updateProduct, getCategories, getProductById } from "utils/http";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
@@ -20,8 +20,8 @@ interface Props extends WithRouterProps {
   buttonLabel: string;
 }
 
-const ProductsRegister: React.FC<Props> = ({
-  buttonLabel = "Registrar",
+const ProductsUpdate: React.FC<Props> = ({
+  buttonLabel = "Atualizar",
 }: Props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -35,16 +35,28 @@ const ProductsRegister: React.FC<Props> = ({
   const router: NextRouter = useRouter();
 
   const { query } = useRouter();
-  const id = query.id;
 
-  const { data } = useQuery([`categories`, id], () =>
-    getCategories(String(id))
+  const id = query.id;
+  const productId = query.product;
+
+  const product = useQuery([`categories`, productId], () =>
+    getProductById(String(productId))
   );
+
+  const catalog = useQuery([`categories`, id], () => getCategories(String(id)));
 
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     useErrors();
 
   const isFormValid = name && errors.length === 0;
+
+  useEffect(() => {
+    setName(String(product?.data?.title));
+    setDescription(String(product?.data?.description));
+    setPrice(Number(product?.data?.price));
+    setImage64(String(product?.data?.image));
+    setCategory(String(product?.data?.category));
+  }, [product.data]);
 
   function handleNameChange(event: any) {
     setName(event.target.value);
@@ -104,18 +116,17 @@ const ProductsRegister: React.FC<Props> = ({
     event.preventDefault();
 
     let produto = {
+      id: String(productId),
       title: name,
       description,
       price,
       image: image64,
-      available,
       productCategoryId: category,
-      companyId: String(id),
     };
 
     try {
-      createProduct(produto);
-      toast.success("Produto cadastrado com sucesso! 🙂", {
+      updateProduct(produto);
+      toast.success("Produto atualizado com sucesso! 🙂", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -126,7 +137,7 @@ const ProductsRegister: React.FC<Props> = ({
       });
       router.push(`/${id}/home/produtos`);
     } catch (e) {
-      toast.error("Não foi possivel cadastrar o produto! 😢", {
+      toast.error("Não foi possivel atualizar o produto! 😢", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -184,7 +195,7 @@ const ProductsRegister: React.FC<Props> = ({
         >
           <option value="">Categoria</option>
 
-          {data?.map((category) => {
+          {catalog?.data?.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -203,4 +214,4 @@ const ProductsRegister: React.FC<Props> = ({
   );
 };
 
-export { ProductsRegister };
+export { ProductsUpdate };

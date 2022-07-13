@@ -13,7 +13,7 @@ export default styled.input<Props>`
   height: 52px;
   border-radius: 4px;
   outline: none;
-  padding: 0 16px;
+  padding: 10px 16px;
   font-size: 16px;
   transition: border-color 0.2s ease-in;
   appearance: none;

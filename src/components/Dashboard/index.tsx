@@ -3,3 +3,8 @@ export * from "./DashboardCompany";
 export * from "./DashboardProducts";
 export * from "./Products";
 export * from "./ProductsRegister";
+export * from "./ProductsUpdate";
+export * from "./CategoryRegister";
+export * from "./Categories";
+export * from "./CategoriesUpdate";
+export * from "./DashboardCategories";
